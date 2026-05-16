@@ -272,4 +272,23 @@ function showEndGameModal(message, primaryButtonText, secondaryButtonText) {
 window.addEventListener('resize', resizeCanvas);
 window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 120));
 
+const themeToggle = document.getElementById('themeToggle');
+function applyTheme(theme) {
+    const isLight = theme === 'light';
+    document.body.classList.toggle('light', isLight);
+    themeToggle.textContent = isLight ? '☀️' : '🌙';
+    themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+}
+applyTheme(localStorage.getItem('theme') || 'dark');
+themeToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const next = document.body.classList.contains('light') ? 'dark' : 'light';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+});
+// Don't let taps on the toggle bubble to the canvas/welcome screen and trigger flap/start.
+['mousedown', 'touchstart'].forEach((evt) => {
+    themeToggle.addEventListener(evt, (e) => e.stopPropagation(), { passive: true });
+});
+
 resizeCanvas();
