@@ -139,8 +139,29 @@ document.addEventListener('keydown', (e) => {
 
 function startGame() {
     welcomeEl.style.display = 'none';
+    resetState();
     gameRunning = true;
     gameLoop();
+}
+
+function resetState() {
+    score = 0;
+    pipes = [];
+    framesSinceLastPipe = 0;
+    finalPipeAppeared = false;
+    flapVelocity = 0;
+    birdY = 100;
+    currentFrameIndex = 0;
+    frameCount = 0;
+}
+
+function returnToStartScreen() {
+    gameRunning = false;
+    resetState();
+    ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    const modal = document.getElementById('gameOverModal');
+    if (modal) modal.classList.remove('show');
+    welcomeEl.style.display = 'block';
 }
 
 function updateBirdPosition() {
@@ -262,11 +283,8 @@ function showEndGameModal(message, primaryButtonText, secondaryButtonText) {
     contactBtn.innerText = secondaryButtonText;
     modal.classList.add('show');
 
-    playAgainBtn.onclick = () => {
-        modal.classList.remove('show');
-        document.location.reload();
-    };
-    closeButton.onclick = () => modal.classList.remove('show');
+    playAgainBtn.onclick = returnToStartScreen;
+    closeButton.onclick = returnToStartScreen;
 }
 
 window.addEventListener('resize', resizeCanvas);
