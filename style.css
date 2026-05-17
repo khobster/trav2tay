@@ -10,7 +10,7 @@
 }
 
 body.light {
-    --bg: #6cb4f0;
+    --bg: #4690d8;
     --fg: #111;
     --modal-bg: #fff;
     --modal-fg: #111;
@@ -21,7 +21,7 @@ body.light {
 body.light {
     background-image:
         url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='820' height='560' viewBox='0 0 820 560'%3E%3Cg fill='%23ffffff'%3E%3Cg opacity='0.95'%3E%3Cellipse cx='110' cy='90' rx='62' ry='22'/%3E%3Cellipse cx='150' cy='72' rx='42' ry='26'/%3E%3Cellipse cx='80' cy='74' rx='34' ry='20'/%3E%3Cellipse cx='185' cy='84' rx='30' ry='18'/%3E%3C/g%3E%3Cg opacity='0.85'%3E%3Cellipse cx='560' cy='210' rx='80' ry='26'/%3E%3Cellipse cx='610' cy='188' rx='52' ry='30'/%3E%3Cellipse cx='520' cy='190' rx='42' ry='24'/%3E%3Cellipse cx='655' cy='200' rx='28' ry='17'/%3E%3C/g%3E%3Cg opacity='0.9'%3E%3Cellipse cx='300' cy='430' rx='58' ry='20'/%3E%3Cellipse cx='335' cy='414' rx='38' ry='23'/%3E%3Cellipse cx='268' cy='418' rx='30' ry='17'/%3E%3C/g%3E%3Cg opacity='0.75'%3E%3Cellipse cx='730' cy='460' rx='44' ry='15'/%3E%3Cellipse cx='755' cy='450' rx='28' ry='17'/%3E%3Cellipse cx='708' cy='451' rx='22' ry='13'/%3E%3C/g%3E%3Cg opacity='0.8'%3E%3Cellipse cx='40' cy='300' rx='34' ry='12'/%3E%3Cellipse cx='62' cy='292' rx='24' ry='14'/%3E%3Cellipse cx='22' cy='293' rx='18' ry='10'/%3E%3C/g%3E%3Cg opacity='0.7'%3E%3Cellipse cx='420' cy='30' rx='30' ry='10'/%3E%3Cellipse cx='440' cy='22' rx='18' ry='12'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-        linear-gradient(180deg, #5aa8ec 0%, #b9dffb 100%);
+        linear-gradient(180deg, #3d8fd4 0%, #9ed1f5 100%);
     background-repeat: repeat, no-repeat;
     background-size: 820px 560px, 100% 100%;
     background-attachment: fixed, fixed;
@@ -106,6 +106,8 @@ html, body {
     z-index: 10;
     display: none;
     pointer-events: auto;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 /* Modal */
