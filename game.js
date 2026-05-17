@@ -48,7 +48,7 @@ spriteSheet.onload = onImageLoad;
 pipeImg.onload = onImageLoad;
 finalPipeImg.onload = onImageLoad;
 spriteSheet.src = 'travisbird.png';
-pipeImg.src = 'purplebeam2.png';
+pipeImg.src = 'pylon.png';
 finalPipeImg.src = 'lastpipe4.png';
 
 const spriteFrames = [

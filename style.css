@@ -10,12 +10,26 @@
 }
 
 body.light {
-    --bg: #eaf4ff;
+    --bg: #6cb4f0;
     --fg: #111;
     --modal-bg: #fff;
     --modal-fg: #111;
     --toggle-bg: rgba(0, 0, 0, 0.08);
     --toggle-border: rgba(0, 0, 0, 0.2);
+}
+
+body.light {
+    background-image:
+        url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Cg fill='%23ffffff' opacity='0.9'%3E%3Cellipse cx='100' cy='80' rx='60' ry='22'/%3E%3Cellipse cx='140' cy='65' rx='40' ry='25'/%3E%3Cellipse cx='75' cy='65' rx='35' ry='20'/%3E%3Cellipse cx='420' cy='180' rx='70' ry='25'/%3E%3Cellipse cx='460' cy='160' rx='45' ry='28'/%3E%3Cellipse cx='390' cy='160' rx='38' ry='22'/%3E%3Cellipse cx='220' cy='310' rx='55' ry='20'/%3E%3Cellipse cx='250' cy='292' rx='35' ry='22'/%3E%3Cellipse cx='195' cy='295' rx='30' ry='18'/%3E%3C/g%3E%3C/svg%3E"),
+        linear-gradient(180deg, #5aa8ec 0%, #b9dffb 100%);
+    background-repeat: repeat, no-repeat;
+    background-size: 600px 400px, 100% 100%;
+    background-attachment: fixed, fixed;
+}
+
+body.light #gameContainer,
+body.light #gameCanvas {
+    background-color: transparent;
 }
 
 html, body {
