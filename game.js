@@ -59,6 +59,69 @@ const spriteFrames = [
 let currentFrameIndex = 0;
 let frameCount = 0;
 
+// Night-sky decoration (dark mode only). Star positions are stored in
+// normalized [0,1] coords so they stay put across resizes/orientation changes.
+const stars = [];
+function initStars() {
+    stars.length = 0;
+    const count = 70;
+    for (let i = 0; i < count; i++) {
+        stars.push({
+            x: Math.random(),
+            y: Math.random() * 0.8, // keep stars in the upper sky, off the score line
+            r: Math.random() * 1.3 + 0.4,
+            alpha: Math.random() * 0.5 + 0.5,
+            phase: Math.random() * Math.PI * 2
+        });
+    }
+}
+initStars();
+
+function drawNightSky() {
+    // Only in the default dark theme; light mode has its own CSS sky.
+    if (document.body.classList.contains('light')) return;
+
+    const t = performance.now();
+
+    // Stars with a gentle twinkle.
+    ctx.fillStyle = '#ffffff';
+    for (const s of stars) {
+        const twinkle = 0.6 + 0.4 * Math.sin(t / 600 + s.phase);
+        ctx.globalAlpha = s.alpha * twinkle;
+        ctx.beginPath();
+        ctx.arc(s.x * GAME_WIDTH, s.y * GAME_HEIGHT, s.r, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // Moon, upper-right.
+    const mx = GAME_WIDTH * 0.80;
+    const my = GAME_HEIGHT * 0.15;
+    const mr = 30;
+
+    const glow = ctx.createRadialGradient(mx, my, mr * 0.6, mx, my, mr * 2.4);
+    glow.addColorStop(0, 'rgba(245, 243, 230, 0.35)');
+    glow.addColorStop(1, 'rgba(245, 243, 230, 0)');
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(mx, my, mr * 2.4, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#f5f3e6';
+    ctx.beginPath();
+    ctx.arc(mx, my, mr, 0, Math.PI * 2);
+    ctx.fill();
+
+    // A few faint craters for character.
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+    const craters = [[-10, -8, 6], [9, -2, 4], [-2, 11, 5], [12, 12, 3]];
+    for (const [dx, dy, cr] of craters) {
+        ctx.beginPath();
+        ctx.arc(mx + dx, my + dy, cr, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
 function resizeCanvas() {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
@@ -236,7 +299,7 @@ function checkCollisions() {
         if (hit) {
             if (pipe.isFinal) {
                 gameRunning = false;
-                showEndGameModal('You win!', 'Play Again', 'Say 👋!');
+                showEndGameModal('You win!', 'Play Again');
                 return;
             }
             gameOver();
@@ -247,13 +310,14 @@ function checkCollisions() {
 
 function gameOver() {
     gameRunning = false;
-    showEndGameModal('Game Over! Your score is: ' + score, 'Play Again', 'Say 👋!');
+    showEndGameModal('Game Over! Your score is: ' + score, 'Play Again');
 }
 
 function gameLoop() {
     if (!gameRunning) return;
 
     ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    drawNightSky();
     updateBirdPosition();
     updateFrame();
     drawBird();
@@ -271,16 +335,14 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-function showEndGameModal(message, primaryButtonText, secondaryButtonText) {
+function showEndGameModal(message, primaryButtonText) {
     const modal = document.getElementById('gameOverModal');
     const gameOverText = document.getElementById('gameOverText');
     const playAgainBtn = document.getElementById('playAgainBtn');
-    const contactBtn = document.getElementById('contactBtn');
     const closeButton = modal.querySelector('.close');
 
     gameOverText.innerText = message;
     playAgainBtn.innerText = primaryButtonText;
-    contactBtn.innerText = secondaryButtonText;
     modal.classList.add('show');
 
     playAgainBtn.onclick = returnToStartScreen;
